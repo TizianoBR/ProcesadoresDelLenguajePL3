@@ -1,0 +1,52 @@
+firstRow:
+  field:
+    Nombre
+  ;
+  field:
+    Frase
+  ;
+  field:
+    Tipo
+  ;
+  field:
+    Lanzamiento
+\r\n
+row:
+  field:
+    Aatrox
+  ;
+  field:
+    the Darkin Blade
+  ;
+  field:
+    Juggernaut
+  ;
+  field:
+    2013-06-13
+\r\n
+row:
+  field:
+    Ahri
+  ;
+  field:
+    the Nine-Tailed Fox
+  ;
+  field:
+    Burst
+  ;
+  field:
+    2011-12-14
+\r\n
+row:
+  field:
+    Akali
+  ;
+  field:
+    the Rogue Assassin
+  ;
+  field:
+    Assassin
+  ;
+  field:
+    2010-05-11
+\r\n
