@@ -1,5 +1,3 @@
-package csv;
-
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
@@ -16,6 +14,8 @@ public class TranslatorJson {
 
     private static File f;
     private static FileWriter writer;
+
+    private static String[] titles;
 
     public static void main(String[] args) throws Exception {
         if (args.length>0 && args[0].length()>3 && args[0].substring(args[0].length()-4).equals(".txt")){
@@ -35,7 +35,10 @@ public class TranslatorJson {
                 return;
             }
             
-            write2txt(tree, 0);
+            writer.write("[\n");
+            translate(tree);
+            writer.write(" ]\n");
+
             writer.close();
             return;
         } else{
@@ -43,16 +46,22 @@ public class TranslatorJson {
         }
     }
 
-    public static void write2txt(ParseTree tree, int indentation) throws IOException {
+    public static void translate(ParseTree tree) throws IOException {
         // writer.write(tree.getText() + "\n");
         for (int i=0; i<tree.getChildCount(); i++){
             String ruleName = getRule(tree.getChild(i));
             if (!ruleName.equals("")) {
-                writer.write("  ".repeat(indentation) + ruleName + ":\n");
-                write2txt(tree.getChild(i), indentation + 1);
-            } else{
-                String childText = tree.getChild(i).getText();
-                writer.write("  ".repeat(indentation) + (childText.equals("\r\n")?"\\r\\n": childText) + "\n");
+                if (ruleName.equals("firstRow")){
+                    prepareTitles(tree.getChild(i));
+                } else if (ruleName.equals("row")){
+                    writer.write("{ ");
+                    writeRow(tree.getChild(i));
+                    if (i < tree.getChildCount() - 2){
+                        writer.write(" },\n");
+                    } else{
+                        writer.write(" }\n");
+                    }
+                }
             }
         }
     }
@@ -63,6 +72,34 @@ public class TranslatorJson {
             return parser.getRuleNames()[ruleIndex];
         } else{
             return "";
+        }
+    }
+
+    public static void prepareTitles(ParseTree tree) {
+        titles = new String[tree.getChildCount()];
+        for (int i=0; i<tree.getChildCount(); i++){
+            String ruleName = getRule(tree.getChild(i));
+            if (ruleName.equals("field")){
+                titles[i] = tree.getChild(i).getText();
+            }
+        }
+    }
+
+    public static void writeRow(ParseTree tree) throws IOException {
+        if (tree.getChildCount() != titles.length){
+            throw new IOException("Row length does not match titles length.");
+        }
+        for (int i=0; i<tree.getChildCount(); i++){
+            String ruleName = getRule(tree.getChild(i));
+            if (ruleName.equals("field")){
+                if (i != 0){
+                    writer.write("  ");
+                }
+                writer.write("\"" + titles[i] + "\": \"" + tree.getChild(i).getText() + "\"");
+                if (i < tree.getChildCount() - 1){
+                    writer.write(",\n");
+                }
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
 // Generated from csvParser.g4 by ANTLR 4.13.2
-package csv;
-
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
