@@ -6,99 +6,103 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class TranslatorJson {
-    private static CharStream cs;
-    private static csvLexer lexer;
-    private static CommonTokenStream tokens;
-    private static csvParser parser;
-    private static ParseTree tree;
-
-    private static File f;
-    private static FileWriter writer;
-
-    private static String[] titles;
-
     public static void main(String[] args) throws Exception {
-        if (args.length>0 && args[0].length()>3 && args[0].substring(args[0].length()-4).equals(".txt")){
+        if (args.length > 0 && args[0].endsWith(".txt")) {
             System.out.println("Reading from file: " + args[0]);
-            cs = CharStreams.fromFileName(args[0]);
-            lexer = new csvLexer(cs);
-            tokens = new CommonTokenStream(lexer);
-            parser = new csvParser(tokens);
 
-            tree = parser.prog();
+            CharStream cs = CharStreams.fromFileName(args[0]);
+            csvLexer lexer = new csvLexer(cs);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            csvParser parser = new csvParser(tokens);
 
-            try{
-                f = new File("csv.json");
-                writer = new FileWriter(f);
-            } catch (IOException e){
-                e.printStackTrace();
-                return;
+            ParseTree tree = parser.prog();
+
+            try (FileWriter writer = new FileWriter(new File("csv.json"))) {
+                CsvJsonVisitor visitor = new CsvJsonVisitor(writer);
+                visitor.visit(tree);
             }
-            
-            writer.write("[\n");
-            translate(tree);
-            writer.write(" ]\n");
-
-            writer.close();
             return;
-        } else{
-            System.out.println("No input file provided.");
         }
+
+        System.out.println("No input file provided.");
     }
 
-    public static void translate(ParseTree tree) throws IOException {
-        // writer.write(tree.getText() + "\n");
-        for (int i=0; i<tree.getChildCount(); i++){
-            String ruleName = getRule(tree.getChild(i));
-            if (!ruleName.equals("")) {
-                if (ruleName.equals("firstRow")){
-                    prepareTitles(tree.getChild(i));
-                } else if (ruleName.equals("row")){
-                    writer.write("{ ");
-                    writeRow(tree.getChild(i));
-                    if (i < tree.getChildCount() - 2){
-                        writer.write(" },\n");
-                    } else{
-                        writer.write(" }\n");
-                    }
+    /** Visitor that converts the parse tree into JSON. */
+    private static class CsvJsonVisitor extends AbstractParseTreeVisitor<Void> {
+        private final FileWriter writer;
+        private String[] titles;
+
+        CsvJsonVisitor(FileWriter writer) {
+            this.writer = writer;
+        }
+
+        @Override
+        public Void visit(ParseTree tree) {
+            if (tree instanceof csvParser.ProgContext ctx) {
+                return visitProg(ctx);
+            }
+            if (tree instanceof csvParser.FirstRowContext ctx) {
+                return visitFirstRow(ctx);
+            }
+            if (tree instanceof csvParser.RowContext ctx) {
+                return visitRow(ctx);
+            }
+            return super.visit(tree);
+        }
+
+        private Void visitProg(csvParser.ProgContext ctx) {
+            write("[\n");
+            visit(ctx.firstRow());
+
+            var rows = ctx.row();
+            for (int i = 0; i < rows.size(); i++) {
+                write("  { ");
+                visit(rows.get(i));
+                if (i < rows.size() - 1) {
+                    write(" },\n");
+                } else {
+                    write(" }\n");
                 }
             }
-        }
-    }
 
-    public static String getRule(ParseTree tree){
-        if (tree instanceof ParserRuleContext ctx) {
-            int ruleIndex = ctx.getRuleIndex();
-            return parser.getRuleNames()[ruleIndex];
-        } else{
-            return "";
+            write("]\n");
+            return null;
         }
-    }
 
-    public static void prepareTitles(ParseTree tree) {
-        titles = new String[tree.getChildCount()];
-        for (int i=0; i<tree.getChildCount(); i++){
-            String ruleName = getRule(tree.getChild(i));
-            if (ruleName.equals("field")){
-                titles[i] = tree.getChild(i).getText();
+        private Void visitFirstRow(csvParser.FirstRowContext ctx) {
+            int fields = ctx.field().size();
+            titles = new String[fields];
+            for (int i = 0; i < fields; i++) {
+                titles[i] = ctx.field(i).getText();
             }
+            return null;
         }
-    }
 
-    public static void writeRow(ParseTree tree) throws IOException {
-        if (tree.getChildCount() != titles.length){
-            throw new IOException("Row length does not match titles length.");
+        private Void visitRow(csvParser.RowContext ctx) {
+            if (titles == null) {
+                throw new IllegalStateException("Titles must be parsed before rows");
+            }
+            if (ctx.field().size() != titles.length) {
+                throw new IllegalStateException("Row length does not match titles length.");
+            }
+
+            for (int i = 0; i < titles.length; i++) {
+                if (i != 0) {
+                    write("  ");
+                }
+                write("\"" + titles[i] + "\": \"" + ctx.field(i).getText() + "\"");
+                if (i < titles.length - 1) {
+                    write(",\n");
+                }
+            }
+            return null;
         }
-        for (int i=0; i<tree.getChildCount(); i++){
-            String ruleName = getRule(tree.getChild(i));
-            if (ruleName.equals("field")){
-                if (i != 0){
-                    writer.write("  ");
-                }
-                writer.write("\"" + titles[i] + "\": \"" + tree.getChild(i).getText() + "\"");
-                if (i < tree.getChildCount() - 1){
-                    writer.write(",\n");
-                }
+
+        private void write(String text) {
+            try {
+                writer.write(text);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
