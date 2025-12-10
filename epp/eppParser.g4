@@ -83,7 +83,6 @@ factor
 
 boolExpr
     : boolExpr OR boolExprT
-    | NOT boolExpr
     | boolExprT
     ;
 
@@ -95,6 +94,7 @@ boolExprT
 boolExprF
     : TRUE
     | FALSE
+    | NOT boolExpr
     | ABREPAREN boolExpr CIERRAPAREN
     | expr compOp expr
     ;
