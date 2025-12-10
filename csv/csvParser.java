@@ -120,7 +120,7 @@ public class csvParser extends Parser {
 			setState(11);
 			match(NEWLINE);
 			setState(12);
-			((ProgContext)_localctx).Rows = rows(0);
+			((ProgContext)_localctx).Rows = rows();
 			}
 		}
 		catch (RecognitionException re) {
@@ -136,100 +136,65 @@ public class csvParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class RowsContext extends ParserRuleContext {
+		public List<RowContext> row() {
+			return getRuleContexts(RowContext.class);
+		}
+		public RowContext row(int i) {
+			return getRuleContext(RowContext.class,i);
+		}
+		public List<TerminalNode> NEWLINE() { return getTokens(csvParser.NEWLINE); }
+		public TerminalNode NEWLINE(int i) {
+			return getToken(csvParser.NEWLINE, i);
+		}
 		public RowsContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_rows; }
-	 
-		public RowsContext() { }
-		public void copyFrom(RowsContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ManyRowsContext extends RowsContext {
-		public RowsContext Rows;
-		public RowContext Row;
-		public TerminalNode SEP() { return getToken(csvParser.SEP, 0); }
-		public RowsContext rows() {
-			return getRuleContext(RowsContext.class,0);
-		}
-		public RowContext row() {
-			return getRuleContext(RowContext.class,0);
-		}
-		public ManyRowsContext(RowsContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitManyRows(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class SingleRowContext extends RowsContext {
-		public RowContext Row;
-		public TerminalNode NEWLINE() { return getToken(csvParser.NEWLINE, 0); }
-		public RowContext row() {
-			return getRuleContext(RowContext.class,0);
-		}
-		public SingleRowContext(RowsContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitSingleRow(this);
+			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitRows(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
 	public final RowsContext rows() throws RecognitionException {
-		return rows(0);
-	}
-
-	private RowsContext rows(int _p) throws RecognitionException {
-		ParserRuleContext _parentctx = _ctx;
-		int _parentState = getState();
-		RowsContext _localctx = new RowsContext(_ctx, _parentState);
-		RowsContext _prevctx = _localctx;
-		int _startState = 2;
-		enterRecursionRule(_localctx, 2, RULE_rows, _p);
+		RowsContext _localctx = new RowsContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_rows);
+		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			{
-			_localctx = new SingleRowContext(_localctx);
-			_ctx = _localctx;
-			_prevctx = _localctx;
-
-			setState(15);
-			((SingleRowContext)_localctx).Row = row();
-			setState(16);
-			match(NEWLINE);
-			}
-			_ctx.stop = _input.LT(-1);
-			setState(23);
+			setState(14);
+			row();
+			setState(19);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
-					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = _localctx;
 					{
 					{
-					_localctx = new ManyRowsContext(new RowsContext(_parentctx, _parentState));
-					((ManyRowsContext)_localctx).Rows = _prevctx;
-					pushNewRecursionContext(_localctx, _startState, RULE_rows);
-					setState(18);
-					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-					setState(19);
-					match(SEP);
-					setState(20);
-					((ManyRowsContext)_localctx).Row = row();
+					setState(15);
+					match(NEWLINE);
+					setState(16);
+					row();
 					}
 					} 
 				}
-				setState(25);
+				setState(21);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
 			}
+			setState(23);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==NEWLINE) {
+				{
+				setState(22);
+				match(NEWLINE);
+				}
+			}
+
 			}
 		}
 		catch (RecognitionException re) {
@@ -238,51 +203,30 @@ public class csvParser extends Parser {
 			_errHandler.recover(this, re);
 		}
 		finally {
-			unrollRecursionContexts(_parentctx);
+			exitRule();
 		}
 		return _localctx;
 	}
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class FirstRowContext extends ParserRuleContext {
+		public List<FieldContext> field() {
+			return getRuleContexts(FieldContext.class);
+		}
+		public FieldContext field(int i) {
+			return getRuleContext(FieldContext.class,i);
+		}
+		public List<TerminalNode> SEP() { return getTokens(csvParser.SEP); }
+		public TerminalNode SEP(int i) {
+			return getToken(csvParser.SEP, i);
+		}
 		public FirstRowContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_firstRow; }
-	 
-		public FirstRowContext() { }
-		public void copyFrom(FirstRowContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ManyFieldsFRContext extends FirstRowContext {
-		public FieldContext Field;
-		public FirstRowContext FirstRow;
-		public TerminalNode SEP() { return getToken(csvParser.SEP, 0); }
-		public FieldContext field() {
-			return getRuleContext(FieldContext.class,0);
-		}
-		public FirstRowContext firstRow() {
-			return getRuleContext(FirstRowContext.class,0);
-		}
-		public ManyFieldsFRContext(FirstRowContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitManyFieldsFR(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class SingleFieldFRContext extends FirstRowContext {
-		public FieldContext Field;
-		public FieldContext field() {
-			return getRuleContext(FieldContext.class,0);
-		}
-		public SingleFieldFRContext(FirstRowContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitSingleFieldFR(this);
+			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitFirstRow(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -290,30 +234,28 @@ public class csvParser extends Parser {
 	public final FirstRowContext firstRow() throws RecognitionException {
 		FirstRowContext _localctx = new FirstRowContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_firstRow);
+		int _la;
 		try {
-			setState(31);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(25);
+			field();
+			setState(30);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
-			case 1:
-				_localctx = new SingleFieldFRContext(_localctx);
-				enterOuterAlt(_localctx, 1);
+			_la = _input.LA(1);
+			while (_la==SEP) {
+				{
 				{
 				setState(26);
-				((SingleFieldFRContext)_localctx).Field = field();
-				}
-				break;
-			case 2:
-				_localctx = new ManyFieldsFRContext(_localctx);
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(27);
-				((ManyFieldsFRContext)_localctx).Field = field();
-				setState(28);
 				match(SEP);
-				setState(29);
-				((ManyFieldsFRContext)_localctx).FirstRow = firstRow();
+				setState(27);
+				field();
 				}
-				break;
+				}
+				setState(32);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -329,44 +271,23 @@ public class csvParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class RowContext extends ParserRuleContext {
+		public List<FieldContext> field() {
+			return getRuleContexts(FieldContext.class);
+		}
+		public FieldContext field(int i) {
+			return getRuleContext(FieldContext.class,i);
+		}
+		public List<TerminalNode> SEP() { return getTokens(csvParser.SEP); }
+		public TerminalNode SEP(int i) {
+			return getToken(csvParser.SEP, i);
+		}
 		public RowContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_row; }
-	 
-		public RowContext() { }
-		public void copyFrom(RowContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class SingleFieldRContext extends RowContext {
-		public FieldContext Field;
-		public FieldContext field() {
-			return getRuleContext(FieldContext.class,0);
-		}
-		public SingleFieldRContext(RowContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitSingleFieldR(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ManyFieldsRContext extends RowContext {
-		public FieldContext Field;
-		public RowContext Row;
-		public TerminalNode SEP() { return getToken(csvParser.SEP, 0); }
-		public FieldContext field() {
-			return getRuleContext(FieldContext.class,0);
-		}
-		public RowContext row() {
-			return getRuleContext(RowContext.class,0);
-		}
-		public ManyFieldsRContext(RowContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitManyFieldsR(this);
+			if ( visitor instanceof csvParserVisitor ) return ((csvParserVisitor<? extends T>)visitor).visitRow(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -374,30 +295,28 @@ public class csvParser extends Parser {
 	public final RowContext row() throws RecognitionException {
 		RowContext _localctx = new RowContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_row);
+		int _la;
 		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(33);
+			field();
 			setState(38);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
-			case 1:
-				_localctx = new SingleFieldRContext(_localctx);
-				enterOuterAlt(_localctx, 1);
+			_la = _input.LA(1);
+			while (_la==SEP) {
 				{
-				setState(33);
-				((SingleFieldRContext)_localctx).Field = field();
-				}
-				break;
-			case 2:
-				_localctx = new ManyFieldsRContext(_localctx);
-				enterOuterAlt(_localctx, 2);
 				{
 				setState(34);
-				((ManyFieldsRContext)_localctx).Field = field();
-				setState(35);
 				match(SEP);
-				setState(36);
-				((ManyFieldsRContext)_localctx).Row = row();
+				setState(35);
+				field();
 				}
-				break;
+				}
+				setState(40);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -434,7 +353,7 @@ public class csvParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(40);
+			setState(41);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 14L) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -457,49 +376,35 @@ public class csvParser extends Parser {
 		return _localctx;
 	}
 
-	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
-		switch (ruleIndex) {
-		case 1:
-			return rows_sempred((RowsContext)_localctx, predIndex);
-		}
-		return true;
-	}
-	private boolean rows_sempred(RowsContext _localctx, int predIndex) {
-		switch (predIndex) {
-		case 0:
-			return precpred(_ctx, 1);
-		}
-		return true;
-	}
-
 	public static final String _serializedATN =
-		"\u0004\u0001\u0006+\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0006,\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0001"+
 		"\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0005\u0001\u0016"+
-		"\b\u0001\n\u0001\f\u0001\u0019\t\u0001\u0001\u0002\u0001\u0002\u0001\u0002"+
-		"\u0001\u0002\u0001\u0002\u0003\u0002 \b\u0002\u0001\u0003\u0001\u0003"+
-		"\u0001\u0003\u0001\u0003\u0001\u0003\u0003\u0003\'\b\u0003\u0001\u0004"+
-		"\u0001\u0004\u0001\u0004\u0000\u0001\u0002\u0005\u0000\u0002\u0004\u0006"+
-		"\b\u0000\u0001\u0001\u0000\u0001\u0003(\u0000\n\u0001\u0000\u0000\u0000"+
-		"\u0002\u000e\u0001\u0000\u0000\u0000\u0004\u001f\u0001\u0000\u0000\u0000"+
-		"\u0006&\u0001\u0000\u0000\u0000\b(\u0001\u0000\u0000\u0000\n\u000b\u0003"+
-		"\u0004\u0002\u0000\u000b\f\u0005\u0005\u0000\u0000\f\r\u0003\u0002\u0001"+
-		"\u0000\r\u0001\u0001\u0000\u0000\u0000\u000e\u000f\u0006\u0001\uffff\uffff"+
-		"\u0000\u000f\u0010\u0003\u0006\u0003\u0000\u0010\u0011\u0005\u0005\u0000"+
-		"\u0000\u0011\u0017\u0001\u0000\u0000\u0000\u0012\u0013\n\u0001\u0000\u0000"+
-		"\u0013\u0014\u0005\u0004\u0000\u0000\u0014\u0016\u0003\u0006\u0003\u0000"+
-		"\u0015\u0012\u0001\u0000\u0000\u0000\u0016\u0019\u0001\u0000\u0000\u0000"+
-		"\u0017\u0015\u0001\u0000\u0000\u0000\u0017\u0018\u0001\u0000\u0000\u0000"+
-		"\u0018\u0003\u0001\u0000\u0000\u0000\u0019\u0017\u0001\u0000\u0000\u0000"+
-		"\u001a \u0003\b\u0004\u0000\u001b\u001c\u0003\b\u0004\u0000\u001c\u001d"+
-		"\u0005\u0004\u0000\u0000\u001d\u001e\u0003\u0004\u0002\u0000\u001e \u0001"+
-		"\u0000\u0000\u0000\u001f\u001a\u0001\u0000\u0000\u0000\u001f\u001b\u0001"+
-		"\u0000\u0000\u0000 \u0005\u0001\u0000\u0000\u0000!\'\u0003\b\u0004\u0000"+
-		"\"#\u0003\b\u0004\u0000#$\u0005\u0004\u0000\u0000$%\u0003\u0006\u0003"+
-		"\u0000%\'\u0001\u0000\u0000\u0000&!\u0001\u0000\u0000\u0000&\"\u0001\u0000"+
-		"\u0000\u0000\'\u0007\u0001\u0000\u0000\u0000()\u0007\u0000\u0000\u0000"+
-		")\t\u0001\u0000\u0000\u0000\u0003\u0017\u001f&";
+		"\u0001\u0005\u0001\u0012\b\u0001\n\u0001\f\u0001\u0015\t\u0001\u0001\u0001"+
+		"\u0003\u0001\u0018\b\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0005\u0002"+
+		"\u001d\b\u0002\n\u0002\f\u0002 \t\u0002\u0001\u0003\u0001\u0003\u0001"+
+		"\u0003\u0005\u0003%\b\u0003\n\u0003\f\u0003(\t\u0003\u0001\u0004\u0001"+
+		"\u0004\u0001\u0004\u0000\u0000\u0005\u0000\u0002\u0004\u0006\b\u0000\u0001"+
+		"\u0001\u0000\u0001\u0003*\u0000\n\u0001\u0000\u0000\u0000\u0002\u000e"+
+		"\u0001\u0000\u0000\u0000\u0004\u0019\u0001\u0000\u0000\u0000\u0006!\u0001"+
+		"\u0000\u0000\u0000\b)\u0001\u0000\u0000\u0000\n\u000b\u0003\u0004\u0002"+
+		"\u0000\u000b\f\u0005\u0005\u0000\u0000\f\r\u0003\u0002\u0001\u0000\r\u0001"+
+		"\u0001\u0000\u0000\u0000\u000e\u0013\u0003\u0006\u0003\u0000\u000f\u0010"+
+		"\u0005\u0005\u0000\u0000\u0010\u0012\u0003\u0006\u0003\u0000\u0011\u000f"+
+		"\u0001\u0000\u0000\u0000\u0012\u0015\u0001\u0000\u0000\u0000\u0013\u0011"+
+		"\u0001\u0000\u0000\u0000\u0013\u0014\u0001\u0000\u0000\u0000\u0014\u0017"+
+		"\u0001\u0000\u0000\u0000\u0015\u0013\u0001\u0000\u0000\u0000\u0016\u0018"+
+		"\u0005\u0005\u0000\u0000\u0017\u0016\u0001\u0000\u0000\u0000\u0017\u0018"+
+		"\u0001\u0000\u0000\u0000\u0018\u0003\u0001\u0000\u0000\u0000\u0019\u001e"+
+		"\u0003\b\u0004\u0000\u001a\u001b\u0005\u0004\u0000\u0000\u001b\u001d\u0003"+
+		"\b\u0004\u0000\u001c\u001a\u0001\u0000\u0000\u0000\u001d \u0001\u0000"+
+		"\u0000\u0000\u001e\u001c\u0001\u0000\u0000\u0000\u001e\u001f\u0001\u0000"+
+		"\u0000\u0000\u001f\u0005\u0001\u0000\u0000\u0000 \u001e\u0001\u0000\u0000"+
+		"\u0000!&\u0003\b\u0004\u0000\"#\u0005\u0004\u0000\u0000#%\u0003\b\u0004"+
+		"\u0000$\"\u0001\u0000\u0000\u0000%(\u0001\u0000\u0000\u0000&$\u0001\u0000"+
+		"\u0000\u0000&\'\u0001\u0000\u0000\u0000\'\u0007\u0001\u0000\u0000\u0000"+
+		"(&\u0001\u0000\u0000\u0000)*\u0007\u0000\u0000\u0000*\t\u0001\u0000\u0000"+
+		"\u0000\u0004\u0013\u0017\u001e&";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

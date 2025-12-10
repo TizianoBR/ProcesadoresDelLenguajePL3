@@ -8,18 +8,41 @@ public class csvToJsonVisitor extends csvParserBaseVisitor<String> {
     }
 
     @Override
-    public String visitSingleFieldFR(csvParser.SingleFieldFRContext ctx) {
-        titles = new String[] { ctx.Field.getText() };
-        return "";
+    public String visitFirstRow(csvParser.FirstRowContext ctx) {
+        int fields = ctx.field().size();
+        titles = new String[fields];
+        for (int i = 0; i < fields; i++) {
+            titles[i] = ctx.field().get(i).getText();
+        }
+        return null;
     }
 
     @Override
-    public String visitManyFieldsFR(csvParser.ManyFieldsFRContext ctx) {
-        String[] subTitles = visit(ctx.FirstRow).split(",");
-        String[] result = new String[subTitles.length + 1];
-        System.arraycopy(subTitles, 0, result, 0, subTitles.length);
-        result[subTitles.length] = ctx.Field.getText();
-        titles = result;
-        return "";
+    public String visitRows(csvParser.RowsContext ctx) {
+        String result = "";
+        System.out.println("Number of rows: " + ctx.row().size());
+        for (int i=0; i<ctx.row().size(); i++){
+            if (i != 0) {
+                result += ",\n";
+            }
+            result += visit(ctx.row(i));
+        }
+        return result;
+    }
+
+    @Override
+    public String visitRow(csvParser.RowContext ctx){
+        String result = "  { ";
+        if (titles.length != ctx.field().size()) {
+            throw new RuntimeException("Number of fields in row does not match number of titles");
+        }
+        for (int i = 0; i < titles.length; i++) {
+            if (i != 0) {
+                result += ",\n  ";
+            }
+            result += "\"" + titles[i] + "\": \"" + ctx.field().get(i).getText() + "\"";
+        }
+        result += " }";
+        return result;
     }
 }

@@ -16,47 +16,23 @@ public interface csvParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(csvParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code ManyRows}
-	 * labeled alternative in {@link csvParser#rows}.
+	 * Visit a parse tree produced by {@link csvParser#rows}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitManyRows(csvParser.ManyRowsContext ctx);
+	T visitRows(csvParser.RowsContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code SingleRow}
-	 * labeled alternative in {@link csvParser#rows}.
+	 * Visit a parse tree produced by {@link csvParser#firstRow}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSingleRow(csvParser.SingleRowContext ctx);
+	T visitFirstRow(csvParser.FirstRowContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code SingleFieldFR}
-	 * labeled alternative in {@link csvParser#firstRow}.
+	 * Visit a parse tree produced by {@link csvParser#row}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSingleFieldFR(csvParser.SingleFieldFRContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ManyFieldsFR}
-	 * labeled alternative in {@link csvParser#firstRow}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitManyFieldsFR(csvParser.ManyFieldsFRContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code SingleFieldR}
-	 * labeled alternative in {@link csvParser#row}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSingleFieldR(csvParser.SingleFieldRContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code ManyFieldsR}
-	 * labeled alternative in {@link csvParser#row}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitManyFieldsR(csvParser.ManyFieldsRContext ctx);
+	T visitRow(csvParser.RowContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link csvParser#field}.
 	 * @param ctx the parse tree
