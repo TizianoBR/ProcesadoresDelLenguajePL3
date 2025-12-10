@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class TranslatorJson {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         if (args.length > 0) {
             System.out.println("Reading from file: " + args[0]);
 

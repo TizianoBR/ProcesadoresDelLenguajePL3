@@ -6,13 +6,35 @@ SI      : 'si';
 NO      : 'no';
 TERMINAR: 'terminar';
 MIENTRAS: 'mientras';
+REPETIR : 'repetir';
 ARROW   : '->';
 QMARKS  : '???';
 END     : ';' [ \t]* 'P';
 
+MAS     : '+';
+MENOS   : '-';
+POR     : '*';
+DIV     : '/';
+MOD     : '%';
+
+TRUE    : 'T';
+FALSE   : 'F';
+
 AND     : '&&';
 OR      : '||';
 NOT     : '!';
+
+IGUALIGUAL : '==';
+NOIGUAL   : '!=';
+MENORIGUAL : '<=';
+MAYORIGUAL : '>=';
+MENOR      : '<';
+MAYOR      : '>';
+
+IGUAL   : '=';
+
+ABREPAREN : '(';
+CIERRAPAREN : ')';
 
 ID      : [a-zA-Z_] [a-zA-Z0-9_]*;
 NUMBER  : [0-9]+ ('.' [0-9]+)?;

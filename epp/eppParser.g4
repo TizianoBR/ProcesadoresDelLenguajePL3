@@ -11,8 +11,6 @@ prog
 
 line
     : statement
-    | cond_line
-    | terminarStmt
     | COMMENT_LINE
     ;
 
@@ -22,14 +20,15 @@ statement
     | show
     | ifStmt
     | whileStmt
+    | forStmt
     ;
 
 assignment
-    : ASIGNAR ID '=' expr END
+    : ASIGNAR ID IGUAL expr END
     ;
 
 simpleAssign
-    : ID '=' expr END
+    : ID IGUAL expr END
     ;
 
 show
@@ -50,6 +49,10 @@ whileStmt
     : (boolExpr QMARKS (NEWLINE)*)? MIENTRAS ARROW (NEWLINE)* block terminarStmt
     ;
 
+forStmt
+    : REPETIR expr ARROW (NEWLINE)* block terminarStmt
+    ;
+
 terminarStmt
     : TERMINAR (END)?
     ;
@@ -59,34 +62,43 @@ block
     ;
 
 expr
-    : expr '+' term
-    | expr '-' term
+    : expr MAS term
+    | expr MENOS term
     | term
     ;
 
 term
-    : term '*' factor
-    | term '/' factor
+    : term POR factor
+    | term DIV factor
+    | term MOD factor
     | factor
     ;
 
 factor
-    : '(' expr ')'
-    | '-' factor
-    | NUMBER
+    : ABREPAREN expr CIERRAPAREN
+    | (MENOS)? NUMBER
     | ID
     | STRING
     ;
 
 boolExpr
-    : boolExpr OR boolExpr
-    | boolExpr AND boolExpr
+    : boolExpr OR boolExprT
     | NOT boolExpr
+    | boolExprT
+    ;
+
+boolExprT
+    : boolExprT AND boolExprF
+    | boolExprF
+    ;
+
+boolExprF
+    : TRUE
+    | FALSE
+    | ABREPAREN boolExpr CIERRAPAREN
     | expr compOp expr
-    | '(' boolExpr ')'
-    | expr
     ;
 
 compOp
-    : '==' | '!=' | '<=' | '>=' | '<' | '>'
+    : IGUALIGUAL | NOIGUAL | MENORIGUAL | MAYORIGUAL | MENOR | MAYOR
     ;
