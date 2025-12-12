@@ -1,7 +1,7 @@
 #Mi programa
 
-var1 = 10;P
-var2 = 5;P
+asignar var1 = 10;P
+asignar var2 = 5;P
 
 mostrar 2 * var1 + var2;P
 mostrar var1 / (var2 + 5);P
@@ -20,11 +20,11 @@ repetir 5 ->
     mostrar var3;P
 terminar
 
-var4 = 0;P
+asignar var4 = 0;P
 
-var4 <= 99 ??? mientras ->
-    45<var4 && 55>=var4 || var4==17??? si ->
+var4 <= 60 ??? mientras ->
+    45<var4 || var4==17??? si ->
         mostrar var4;P
     terminar
-    asignar var4 = var4 + 1;P
+    var4 = var4 + 1;P
 terminar

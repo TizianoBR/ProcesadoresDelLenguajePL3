@@ -33,7 +33,7 @@ goto LABEL_END_1
 LABEL_TRUE_1:
 ldc 1
 LABEL_END_1:
-ifne ELSE_LABEL_0
+ifeq ELSE_LABEL_0
 getstatic java/lang/System/out Ljava/io/PrintStream;
 ldc 1
 invokevirtual java/io/PrintStream/println(I)V
@@ -70,7 +70,7 @@ ldc 0
 istore 3
 START_WHILE_LABEL_3:
 iload 3
-ldc 99
+ldc 60
 if_icmple LABEL_TRUE_4
 ldc 0
 goto LABEL_END_4
@@ -86,25 +86,16 @@ goto LABEL_END_6
 LABEL_TRUE_6:
 ldc 1
 LABEL_END_6:
-ldc 45
 iload 3
-if_icmplt LABEL_TRUE_7
+ldc 17
+if_icmpeq LABEL_TRUE_7
 ldc 0
 goto LABEL_END_7
 LABEL_TRUE_7:
 ldc 1
 LABEL_END_7:
-iand
-iload 3
-ldc 17
-if_icmpeq LABEL_TRUE_8
-ldc 0
-goto LABEL_END_8
-LABEL_TRUE_8:
-ldc 1
-LABEL_END_8:
 ior
-ifne END_IF_LABEL_5
+ifeq END_IF_LABEL_5
 getstatic java/lang/System/out Ljava/io/PrintStream;
 iload 3
 invokevirtual java/io/PrintStream/println(I)V
