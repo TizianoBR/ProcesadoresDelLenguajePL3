@@ -3,6 +3,8 @@ import java.util.ArrayList;
 public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
     // Array con tres listas: [0] nombres, [1] índices, [2] tipos
     private ArrayList<String>[] variables = new ArrayList[3];
+    private int errorCount = 0;  // Contador de errores
+    private int warningCount = 0;  // Contador de advertencias
     
     public eppToJasminVisitor() {
         variables[0] = new ArrayList<>(); // nombres
@@ -12,6 +14,28 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
 
     private int labelCount = 0;
     private int forDepth = 0; // Profundidad de anidamiento de bucles for
+    
+    // Método para registrar errores
+    private void reportError(String message) {
+        errorCount++;
+        System.err.println("[ERROR " + errorCount + "] " + message);
+    }
+    
+    // Método para registrar advertencias
+    private void reportWarning(String message) {
+        warningCount++;
+        System.err.println("[WARNING " + warningCount + "] " + message);
+    }
+    
+    // Método para obtener el número total de errores
+    public int getErrorCount() {
+        return errorCount;
+    }
+    
+    // Método para obtener el número total de advertencias
+    public int getWarningCount() {
+        return warningCount;
+    }
 
     @Override
     public String visitProg(eppParser.ProgContext ctx) {
@@ -80,7 +104,16 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         visit(ctx.expr());
         String id = ctx.ID().getText();
         String exprCode = visit(ctx.expr());
-        if (!variables[0].contains(id)) {
+        
+        // Validar identificador válido
+        if (!isValidIdentifier(id)) {
+            reportError("Identificador inválido: '" + id + "'");
+        }
+        
+        // Verificar si la variable ya existe
+        if (variables[0].contains(id)) {
+            reportWarning("Variable '" + id + "' ya fue declarada anteriormente. Se sobrescribirá su valor.");
+        } else {
             variables[0].add(id); // nombre
             variables[1].add(String.valueOf(variables[0].size() - 1)); // índice
             variables[2].add("int"); // tipo (por defecto int)
@@ -96,7 +129,16 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         visit(ctx.expr());
         String id = ctx.ID().getText();
         String exprCode = visit(ctx.expr());
-        if (!variables[0].contains(id)) {
+        
+        // Validar identificador válido
+        if (!isValidIdentifier(id)) {
+            reportError("Identificador inválido: '" + id + "'");
+        }
+        
+        // Verificar si la variable ya existe
+        if (variables[0].contains(id)) {
+            reportWarning("Variable '" + id + "' ya fue declarada anteriormente. Se sobrescribirá su valor.");
+        } else {
             variables[0].add(id); // nombre
             variables[1].add(String.valueOf(variables[0].size() - 1)); // índice
             variables[2].add("int"); // tipo (por defecto int)
@@ -170,6 +212,11 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         // Tercer for anidado: 94, 95, etc.
         int limitVarIndex = 98 - (forDepth * 2);
         int counterVarIndex = 99 - (forDepth * 2);
+        
+        // Verificar límite de anidamiento
+        if (forDepth >= 50) {
+            reportError("Anidamiento de bucles 'for' demasiado profundo (máximo 50 niveles)");
+        }
         
         // Incrementar profundidad al entrar en el for
         forDepth++;
@@ -255,9 +302,24 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
 
     @Override
     public String visitTermDiv(eppParser.TermDivContext ctx) {
-        return visit(ctx.term()) +
-               visit(ctx.factor()) +
-               "idiv\n";
+        String divisor = visit(ctx.factor());
+        
+        // Advertencia: posible división por cero (difícil detectar en tiempo de compilación)
+        if (ctx.factor() instanceof eppParser.FactorNumberContext) {
+            eppParser.FactorNumberContext factorNum = (eppParser.FactorNumberContext) ctx.factor();
+            String numberText = factorNum.NUMBER().getText();
+            try {
+                if (Integer.parseInt(numberText) == 0) {
+                    reportError("División por cero detectada en tiempo de compilación");
+                }
+            } catch (NumberFormatException e) {
+                // Ignorar si no es un número válido
+            }
+        } else {
+            reportWarning("No se puede verificar división por cero en tiempo de compilación. Verifique en tiempo de ejecución.");
+        }
+        
+        return visit(ctx.term()) + divisor + "idiv\n";
     }
 
     @Override
@@ -279,7 +341,7 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
     public String visitFactorId(eppParser.FactorIdContext ctx) {
         String id = ctx.ID().getText();
         if (!variables[0].contains(id)) {
-            System.err.println("Error: variable '" + id + "' no declarada. Cargando 0 por defecto.");
+            reportError("Variable '" + id + "' no declarada. Cargando 0 por defecto.");
             return "ldc 0\n";
         }
         int varIndex = variables[0].indexOf(id);
@@ -375,5 +437,33 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
     @Override
     public String visitCompOpMayorIgual(eppParser.CompOpMayorIgualContext ctx) {
         return "if_icmpge";
+    }
+    
+    // Método auxiliar para validar identificadores
+    private boolean isValidIdentifier(String id) {
+        if (id == null || id.isEmpty()) {
+            return false;
+        }
+        // Primera letra debe ser letra o guion bajo, resto letras, números o guion bajo
+        if (!Character.isLetter(id.charAt(0)) && id.charAt(0) != '_') {
+            return false;
+        }
+        for (int i = 1; i < id.length(); i++) {
+            char c = id.charAt(i);
+            if (!Character.isLetterOrDigit(c) && c != '_') {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    // Método para imprimir resumen de errores y advertencias
+    public void printErrorSummary() {
+        if (errorCount > 0 || warningCount > 0) {
+            System.err.println("\n========== RESUMEN DE ERRORES Y ADVERTENCIAS ==========");
+            System.err.println("Total de errores: " + errorCount);
+            System.err.println("Total de advertencias: " + warningCount);
+            System.err.println("========================================================\n");
+        }
     }
 }

@@ -20,6 +20,14 @@ public class TranslatorJasmin {
             try (FileWriter writer = new FileWriter(new File("epp.j"))) {
                 eppToJasminVisitor visitor = new eppToJasminVisitor();
                 writer.write(visitor.visit(tree));
+                
+                // Imprimir resumen de errores y advertencias
+                visitor.printErrorSummary();
+                
+                // Si hay errores, mostrar advertencia pero continuar
+                if (visitor.getErrorCount() > 0) {
+                    System.err.println("Se encontraron " + visitor.getErrorCount() + " error(es) durante la compilación.");
+                }
             }
             return;
         }
@@ -27,3 +35,4 @@ public class TranslatorJasmin {
         System.out.println("No input file provided.");
     }
 }
+
