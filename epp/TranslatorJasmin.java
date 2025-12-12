@@ -26,7 +26,7 @@ public class TranslatorJasmin {
                 
                 // Si hay errores, mostrar advertencia pero continuar
                 if (visitor.getErrorCount() > 0) {
-                    System.err.println("⚠️  Se encontraron " + visitor.getErrorCount() + " error(es) durante la compilación.");
+                    System.err.println("Se encontraron " + visitor.getErrorCount() + " error(es) durante la compilación.");
                 }
             }
             return;
