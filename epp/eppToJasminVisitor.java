@@ -283,22 +283,9 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
 
     @Override
     public String visitTermDiv(eppParser.TermDivContext ctx) {
-        String divisor = visit(ctx.factor());
-        
-        // Advertencia: posible división por cero (difícil detectar en tiempo de compilación)
-        if (ctx.factor() instanceof eppParser.FactorNumberContext) {
-            eppParser.FactorNumberContext factorNum = (eppParser.FactorNumberContext) ctx.factor();
-            String numberText = factorNum.NUMBER().getText();
-            try {
-                if (Integer.parseInt(numberText) == 0) {
-                    reportError("División por cero detectada en tiempo de compilación");
-                }
-            } catch (NumberFormatException e) {
-                // Ignorar si no es un número válido
-            }
-        }
-        
-        return visit(ctx.term()) + divisor + "idiv\n";
+        return visit(ctx.term()) +
+               visit(ctx.factor()) +
+               "idiv\n";
     }
 
     @Override
