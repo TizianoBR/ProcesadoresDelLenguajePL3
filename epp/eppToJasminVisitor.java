@@ -313,7 +313,19 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
 
     @Override
     public String visitFactorNumber(eppParser.FactorNumberContext ctx) {
-        return "ldc " + ctx.NUMBER().getText() + "\n";
+        String numberText = ctx.NUMBER().getText();
+        try {
+            // Verificar que el número esté dentro del rango de int
+            long value = Long.parseLong(numberText);
+            if (value > Integer.MAX_VALUE || value < Integer.MIN_VALUE) {
+                reportError("Número '" + numberText + "' fuera del rango de enteros válidos (" + Integer.MIN_VALUE + " a " + Integer.MAX_VALUE + ")");
+                return "ldc 0\n"; // Cargar 0 por defecto
+            }
+        } catch (NumberFormatException e) {
+            reportError("Formato de número inválido: '" + numberText + "'");
+            return "ldc 0\n"; // Cargar 0 por defecto
+        }
+        return "ldc " + numberText + "\n";
     }
 
     @Override
@@ -433,7 +445,23 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
                 return false;
             }
         }
+        // Verificar palabras reservadas
+        if (isReservedWord(id)) {
+            return false;
+        }
         return true;
+    }
+    
+    // Método auxiliar para verificar palabras reservadas
+    private boolean isReservedWord(String id) {
+        String[] reservedWords = {"si", "mientras", "para", "mostrar", "terminar", "verdadero", "falso", 
+                                  "if", "while", "for", "show", "true", "false", "int", "var"};
+        for (String word : reservedWords) {
+            if (id.equalsIgnoreCase(word)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     // Método para imprimir resumen de errores
