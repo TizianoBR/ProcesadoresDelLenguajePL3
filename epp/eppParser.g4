@@ -35,10 +35,6 @@ show
     : MOSTRAR expr END
     ;
 
-cond_line
-    : boolExpr QMARKS
-    ;
-
 ifStmt
     : (boolExpr QMARKS (NEWLINE)*)? SI ARROW (NEWLINE)* block
       (NO ARROW (NEWLINE)* block)?
@@ -70,7 +66,6 @@ expr
 term
     : term POR factor   #termPor
     | term DIV factor   #termDiv
-    | term MOD factor   #termMod
     | factor            #termFactor
     ;
 
@@ -78,7 +73,6 @@ factor
     : ABREPAREN expr CIERRAPAREN    #factorParen
     | (MENOS)? NUMBER               #factorNumber
     | ID                            #factorId
-    | STRING                        #factorString
     ;
 
 boolExpr

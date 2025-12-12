@@ -90,12 +90,6 @@ public interface eppParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitShow(eppParser.ShowContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link eppParser#cond_line}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCond_line(eppParser.Cond_lineContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link eppParser#ifStmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -161,13 +155,6 @@ public interface eppParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTermPor(eppParser.TermPorContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code termMod}
-	 * labeled alternative in {@link eppParser#term}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTermMod(eppParser.TermModContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code termFactor}
 	 * labeled alternative in {@link eppParser#term}.
 	 * @param ctx the parse tree
@@ -195,13 +182,6 @@ public interface eppParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFactorId(eppParser.FactorIdContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code factorString}
-	 * labeled alternative in {@link eppParser#factor}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFactorString(eppParser.FactorStringContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code boolExprOr}
 	 * labeled alternative in {@link eppParser#boolExpr}.

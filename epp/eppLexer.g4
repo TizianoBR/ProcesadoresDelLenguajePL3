@@ -15,7 +15,6 @@ MAS     : '+';
 MENOS   : '-';
 POR     : '*';
 DIV     : '/';
-MOD     : '%';
 
 TRUE    : 'T';
 FALSE   : 'F';
