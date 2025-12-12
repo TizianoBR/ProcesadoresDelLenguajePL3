@@ -11,6 +11,7 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
     }
 
     private int labelCount = 0;
+    private int forDepth = 0; // Profundidad de anidamiento de bucles for
 
     @Override
     public String visitProg(eppParser.ProgContext ctx) {
@@ -162,10 +163,16 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         String endForLabel = "END_FOR_LABEL_" + labelCount;
         labelCount++;
 
-        // Usar índices altos para variables temporales (98 y 99) para evitar colisiones
-        // Ya que .limit locals es 100, usamos los últimos slots disponibles
-        int limitVarIndex = 98;
-        int counterVarIndex = 99;
+        // Usar índices altos basados en la profundidad de anidamiento
+        // Cada nivel usa 2 variables: límite y contador
+        // Primer for: 98, 99
+        // Segundo for anidado: 96, 97
+        // Tercer for anidado: 94, 95, etc.
+        int limitVarIndex = 98 - (forDepth * 2);
+        int counterVarIndex = 99 - (forDepth * 2);
+        
+        // Incrementar profundidad al entrar en el for
+        forDepth++;
         
         // Evaluar la expresión del límite y guardarla
         result += visit(ctx.expr());
@@ -199,6 +206,9 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         
         // Etiqueta de fin del bucle
         result += endForLabel + ":\n";
+        
+        // Decrementar profundidad al salir del for
+        forDepth--;
         
         return result;
     }
