@@ -4,7 +4,6 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
     // Array con tres listas: [0] nombres, [1] índices, [2] tipos
     private ArrayList<String>[] variables = new ArrayList[3];
     private int errorCount = 0;  // Contador de errores
-    private int warningCount = 0;  // Contador de advertencias
     
     public eppToJasminVisitor() {
         variables[0] = new ArrayList<>(); // nombres
@@ -21,20 +20,9 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         System.err.println("[ERROR " + errorCount + "] " + message);
     }
     
-    // Método para registrar advertencias
-    private void reportWarning(String message) {
-        warningCount++;
-        System.err.println("[WARNING " + warningCount + "] " + message);
-    }
-    
     // Método para obtener el número total de errores
     public int getErrorCount() {
         return errorCount;
-    }
-    
-    // Método para obtener el número total de advertencias
-    public int getWarningCount() {
-        return warningCount;
     }
 
     @Override
@@ -111,9 +99,7 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         }
         
         // Verificar si la variable ya existe
-        if (variables[0].contains(id)) {
-            reportWarning("Variable '" + id + "' ya fue declarada anteriormente. Se sobrescribirá su valor.");
-        } else {
+        if (!variables[0].contains(id)) {
             variables[0].add(id); // nombre
             variables[1].add(String.valueOf(variables[0].size() - 1)); // índice
             variables[2].add("int"); // tipo (por defecto int)
@@ -137,7 +123,7 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         
         // Verificar si la variable ya existe
         if (variables[0].contains(id)) {
-            reportWarning("Variable '" + id + "' ya fue declarada anteriormente. Se sobrescribirá su valor.");
+            reportError("Variable '" + id + "' ya fue declarada anteriormente.");
         } else {
             variables[0].add(id); // nombre
             variables[1].add(String.valueOf(variables[0].size() - 1)); // índice
@@ -212,11 +198,6 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         // Tercer for anidado: 94, 95, etc.
         int limitVarIndex = 98 - (forDepth * 2);
         int counterVarIndex = 99 - (forDepth * 2);
-        
-        // Verificar límite de anidamiento
-        if (forDepth >= 50) {
-            reportError("Anidamiento de bucles 'for' demasiado profundo (máximo 50 niveles)");
-        }
         
         // Incrementar profundidad al entrar en el for
         forDepth++;
@@ -315,8 +296,6 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
             } catch (NumberFormatException e) {
                 // Ignorar si no es un número válido
             }
-        } else {
-            reportWarning("No se puede verificar división por cero en tiempo de compilación. Verifique en tiempo de ejecución.");
         }
         
         return visit(ctx.term()) + divisor + "idiv\n";
@@ -457,13 +436,12 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         return true;
     }
     
-    // Método para imprimir resumen de errores y advertencias
+    // Método para imprimir resumen de errores
     public void printErrorSummary() {
-        if (errorCount > 0 || warningCount > 0) {
-            System.err.println("\n========== RESUMEN DE ERRORES Y ADVERTENCIAS ==========");
+        if (errorCount > 0) {
+            System.err.println("\n========== RESUMEN DE ERRORES ==========");
             System.err.println("Total de errores: " + errorCount);
-            System.err.println("Total de advertencias: " + warningCount);
-            System.err.println("========================================================\n");
+            System.err.println("==========================================\n");
         }
     }
 }
