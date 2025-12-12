@@ -98,8 +98,10 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
             reportError("Identificador inválido: '" + id + "'");
         }
         
-        // Verificar si la variable ya existe
-        if (!variables[0].contains(id)) {
+        // Verificar si la variable ya existe (error de redeclaración)
+        if (variables[0].contains(id)) {
+            reportError("Variable '" + id + "' ya fue declarada anteriormente.");
+        } else {
             variables[0].add(id); // nombre
             variables[1].add(String.valueOf(variables[0].size() - 1)); // índice
             variables[2].add("int"); // tipo (por defecto int)
@@ -121,13 +123,9 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
             reportError("Identificador inválido: '" + id + "'");
         }
         
-        // Verificar si la variable ya existe
-        if (variables[0].contains(id)) {
-            reportError("Variable '" + id + "' ya fue declarada anteriormente.");
-        } else {
-            variables[0].add(id); // nombre
-            variables[1].add(String.valueOf(variables[0].size() - 1)); // índice
-            variables[2].add("int"); // tipo (por defecto int)
+        // Verificar que la variable ya existe (debe estar declarada previamente)
+        if (!variables[0].contains(id)) {
+            reportError("Variable '" + id + "' no fue declarada. Use 'var' para declarar variables.");
         }
         int varIndex = variables[0].indexOf(id);
         String result = exprCode +
