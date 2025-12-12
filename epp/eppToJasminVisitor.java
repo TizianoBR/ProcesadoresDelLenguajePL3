@@ -148,7 +148,6 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
         labelCount++;
 
         result += visit(ctx.boolExpr());
-        result += "ldc 1\n";
         result += "ifeq " + (ctx.block().size()>1?elseLabel : endIfLabel) + "\n";
 
         result += visit(ctx.block(0));
@@ -172,7 +171,6 @@ public class eppToJasminVisitor extends eppParserBaseVisitor<String> {
 
         result += startWhileLabel + ":\n";
         result += visit(ctx.boolExpr());
-        result += "ldc 0\n";
         result += "ifeq " + endWhileLabel + "\n";
 
         result += visit(ctx.block());

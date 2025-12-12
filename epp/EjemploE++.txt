@@ -3,7 +3,8 @@
 var1 = 10;P
 var2 = 5;P
 
-mostrar var1 + var2;P
+mostrar 2 * var1 + var2;P
+mostrar var1 / (var2 + 5);P
 
 var1 > 5 ???
 si ->
@@ -12,9 +13,18 @@ no ->
     mostrar 0;P
 terminar
 
-var3 = 0;P
+asignar var3 = 0;P
 
 repetir 5 ->
     var3 = var3 + 1;P
     mostrar var3;P
+terminar
+
+var4 = 0;P
+
+var4 <= 99 ??? mientras ->
+    45<var4 && 55>=var4 || var4==17??? si ->
+        mostrar var4;P
+    terminar
+    asignar var4 = var4 + 1;P
 terminar
