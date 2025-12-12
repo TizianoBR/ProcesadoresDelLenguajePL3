@@ -1,4 +1,4 @@
-// Generated from c:/Users/tizia/Desktop/Universidad/Procesadores del lenguaje/ProcesadoresDelLenguajePL3/epp/eppParser.g4 by ANTLR 4.13.1
+// Generated from eppParser.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
+@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue", "this-escape"})
 public class eppParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.13.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -122,6 +122,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_prog; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitProg(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ProgContext prog() throws RecognitionException {
@@ -205,11 +210,21 @@ public class eppParser extends Parser {
 			return getRuleContext(StatementContext.class,0);
 		}
 		public LineStatementContext(LineContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitLineStatement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class LineCommentContext extends LineContext {
 		public TerminalNode COMMENT_LINE() { return getToken(eppParser.COMMENT_LINE, 0); }
 		public LineCommentContext(LineContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitLineComment(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final LineContext line() throws RecognitionException {
@@ -280,6 +295,11 @@ public class eppParser extends Parser {
 			return getRuleContext(AssignmentContext.class,0);
 		}
 		public StatementAssignmentContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitStatementAssignment(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StatementShowContext extends StatementContext {
@@ -287,6 +307,11 @@ public class eppParser extends Parser {
 			return getRuleContext(ShowContext.class,0);
 		}
 		public StatementShowContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitStatementShow(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StatementForContext extends StatementContext {
@@ -294,6 +319,11 @@ public class eppParser extends Parser {
 			return getRuleContext(ForStmtContext.class,0);
 		}
 		public StatementForContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitStatementFor(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StatementSimpleAssignContext extends StatementContext {
@@ -301,6 +331,11 @@ public class eppParser extends Parser {
 			return getRuleContext(SimpleAssignContext.class,0);
 		}
 		public StatementSimpleAssignContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitStatementSimpleAssign(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StatementWhileContext extends StatementContext {
@@ -308,6 +343,11 @@ public class eppParser extends Parser {
 			return getRuleContext(WhileStmtContext.class,0);
 		}
 		public StatementWhileContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitStatementWhile(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class StatementIfContext extends StatementContext {
@@ -315,6 +355,11 @@ public class eppParser extends Parser {
 			return getRuleContext(IfStmtContext.class,0);
 		}
 		public StatementIfContext(StatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitStatementIf(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final StatementContext statement() throws RecognitionException {
@@ -398,6 +443,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assignment; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitAssignment(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final AssignmentContext assignment() throws RecognitionException {
@@ -441,6 +491,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_simpleAssign; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitSimpleAssign(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final SimpleAssignContext simpleAssign() throws RecognitionException {
@@ -481,6 +536,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_show; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitShow(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ShowContext show() throws RecognitionException {
@@ -518,6 +578,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_cond_line; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitCond_line(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final Cond_lineContext cond_line() throws RecognitionException {
@@ -572,6 +637,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_ifStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitIfStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final IfStmtContext ifStmt() throws RecognitionException {
@@ -697,6 +767,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_whileStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitWhileStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final WhileStmtContext whileStmt() throws RecognitionException {
@@ -791,6 +866,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_forStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitForStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ForStmtContext forStmt() throws RecognitionException {
@@ -847,6 +927,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_terminarStmt; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitTerminarStmt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final TerminarStmtContext terminarStmt() throws RecognitionException {
@@ -901,6 +986,11 @@ public class eppParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_block; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBlock(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final BlockContext block() throws RecognitionException {
@@ -991,6 +1081,11 @@ public class eppParser extends Parser {
 			return getRuleContext(TermContext.class,0);
 		}
 		public ExprMasContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitExprMas(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprTermContext extends ExprContext {
@@ -998,6 +1093,11 @@ public class eppParser extends Parser {
 			return getRuleContext(TermContext.class,0);
 		}
 		public ExprTermContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitExprTerm(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExprMenosContext extends ExprContext {
@@ -1009,6 +1109,11 @@ public class eppParser extends Parser {
 			return getRuleContext(TermContext.class,0);
 		}
 		public ExprMenosContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitExprMenos(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ExprContext expr() throws RecognitionException {
@@ -1112,6 +1217,11 @@ public class eppParser extends Parser {
 			return getRuleContext(FactorContext.class,0);
 		}
 		public TermDivContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitTermDiv(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TermPorContext extends TermContext {
@@ -1123,6 +1233,11 @@ public class eppParser extends Parser {
 			return getRuleContext(FactorContext.class,0);
 		}
 		public TermPorContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitTermPor(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TermModContext extends TermContext {
@@ -1134,6 +1249,11 @@ public class eppParser extends Parser {
 			return getRuleContext(FactorContext.class,0);
 		}
 		public TermModContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitTermMod(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class TermFactorContext extends TermContext {
@@ -1141,6 +1261,11 @@ public class eppParser extends Parser {
 			return getRuleContext(FactorContext.class,0);
 		}
 		public TermFactorContext(TermContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitTermFactor(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final TermContext term() throws RecognitionException {
@@ -1250,12 +1375,22 @@ public class eppParser extends Parser {
 	public static class FactorIdContext extends FactorContext {
 		public TerminalNode ID() { return getToken(eppParser.ID, 0); }
 		public FactorIdContext(FactorContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitFactorId(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FactorNumberContext extends FactorContext {
 		public TerminalNode NUMBER() { return getToken(eppParser.NUMBER, 0); }
 		public TerminalNode MENOS() { return getToken(eppParser.MENOS, 0); }
 		public FactorNumberContext(FactorContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitFactorNumber(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FactorParenContext extends FactorContext {
@@ -1265,11 +1400,21 @@ public class eppParser extends Parser {
 		}
 		public TerminalNode CIERRAPAREN() { return getToken(eppParser.CIERRAPAREN, 0); }
 		public FactorParenContext(FactorContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitFactorParen(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class FactorStringContext extends FactorContext {
 		public TerminalNode STRING() { return getToken(eppParser.STRING, 0); }
 		public FactorStringContext(FactorContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitFactorString(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FactorContext factor() throws RecognitionException {
@@ -1364,6 +1509,11 @@ public class eppParser extends Parser {
 			return getRuleContext(BoolExprTContext.class,0);
 		}
 		public BoolExprOrContext(BoolExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprOr(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class BoolExprExprTContext extends BoolExprContext {
@@ -1371,6 +1521,11 @@ public class eppParser extends Parser {
 			return getRuleContext(BoolExprTContext.class,0);
 		}
 		public BoolExprExprTContext(BoolExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprExprT(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final BoolExprContext boolExpr() throws RecognitionException {
@@ -1452,6 +1607,11 @@ public class eppParser extends Parser {
 			return getRuleContext(BoolExprFContext.class,0);
 		}
 		public BoolExprTExprFContext(BoolExprTContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprTExprF(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class BoolExprTAndContext extends BoolExprTContext {
@@ -1463,6 +1623,11 @@ public class eppParser extends Parser {
 			return getRuleContext(BoolExprFContext.class,0);
 		}
 		public BoolExprTAndContext(BoolExprTContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprTAnd(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final BoolExprTContext boolExprT() throws RecognitionException {
@@ -1542,6 +1707,11 @@ public class eppParser extends Parser {
 	public static class BoolExprFFalseContext extends BoolExprFContext {
 		public TerminalNode FALSE() { return getToken(eppParser.FALSE, 0); }
 		public BoolExprFFalseContext(BoolExprFContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprFFalse(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class BoolExprFCompContext extends BoolExprFContext {
@@ -1555,6 +1725,11 @@ public class eppParser extends Parser {
 			return getRuleContext(CompOpContext.class,0);
 		}
 		public BoolExprFCompContext(BoolExprFContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprFComp(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class BoolExprFNotContext extends BoolExprFContext {
@@ -1563,6 +1738,11 @@ public class eppParser extends Parser {
 			return getRuleContext(BoolExprContext.class,0);
 		}
 		public BoolExprFNotContext(BoolExprFContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprFNot(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class BoolExprFParenContext extends BoolExprFContext {
@@ -1572,11 +1752,21 @@ public class eppParser extends Parser {
 		}
 		public TerminalNode CIERRAPAREN() { return getToken(eppParser.CIERRAPAREN, 0); }
 		public BoolExprFParenContext(BoolExprFContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprFParen(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class BoolExprFTrueContext extends BoolExprFContext {
 		public TerminalNode TRUE() { return getToken(eppParser.TRUE, 0); }
 		public BoolExprFTrueContext(BoolExprFContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitBoolExprFTrue(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final BoolExprFContext boolExprF() throws RecognitionException {
@@ -1665,31 +1855,61 @@ public class eppParser extends Parser {
 	public static class CompOpMayorIgualContext extends CompOpContext {
 		public TerminalNode MAYORIGUAL() { return getToken(eppParser.MAYORIGUAL, 0); }
 		public CompOpMayorIgualContext(CompOpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitCompOpMayorIgual(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CompOpNoIgualContext extends CompOpContext {
 		public TerminalNode NOIGUAL() { return getToken(eppParser.NOIGUAL, 0); }
 		public CompOpNoIgualContext(CompOpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitCompOpNoIgual(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CompOpIgualIgualContext extends CompOpContext {
 		public TerminalNode IGUALIGUAL() { return getToken(eppParser.IGUALIGUAL, 0); }
 		public CompOpIgualIgualContext(CompOpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitCompOpIgualIgual(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CompOpMenorIgualContext extends CompOpContext {
 		public TerminalNode MENORIGUAL() { return getToken(eppParser.MENORIGUAL, 0); }
 		public CompOpMenorIgualContext(CompOpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitCompOpMenorIgual(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CompOpMenorContext extends CompOpContext {
 		public TerminalNode MENOR() { return getToken(eppParser.MENOR, 0); }
 		public CompOpMenorContext(CompOpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitCompOpMenor(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 	@SuppressWarnings("CheckReturnValue")
 	public static class CompOpMayorContext extends CompOpContext {
 		public TerminalNode MAYOR() { return getToken(eppParser.MAYOR, 0); }
 		public CompOpMayorContext(CompOpContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof eppParserVisitor ) return ((eppParserVisitor<? extends T>)visitor).visitCompOpMayor(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CompOpContext compOp() throws RecognitionException {

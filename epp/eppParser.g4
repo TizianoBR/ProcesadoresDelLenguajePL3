@@ -10,17 +10,17 @@ prog
     ;
 
 line
-    : statement
-    | COMMENT_LINE
+    : statement     #lineStatement
+    | COMMENT_LINE  #lineComment
     ;
 
 statement
-    : assignment
-    | simpleAssign
-    | show
-    | ifStmt
-    | whileStmt
-    | forStmt
+    : assignment    #statementAssignment
+    | simpleAssign  #statementSimpleAssign
+    | show          #statementShow
+    | ifStmt        #statementIf
+    | whileStmt     #statementWhile
+    | forStmt       #statementFor
     ;
 
 assignment
@@ -62,43 +62,48 @@ block
     ;
 
 expr
-    : expr MAS term
-    | expr MENOS term
-    | term
+    : expr MAS term     #exprMas
+    | expr MENOS term   #exprMenos
+    | term              #exprTerm
     ;
 
 term
-    : term POR factor
-    | term DIV factor
-    | term MOD factor
-    | factor
+    : term POR factor   #termPor
+    | term DIV factor   #termDiv
+    | term MOD factor   #termMod
+    | factor            #termFactor
     ;
 
 factor
-    : ABREPAREN expr CIERRAPAREN
-    | (MENOS)? NUMBER
-    | ID
-    | STRING
+    : ABREPAREN expr CIERRAPAREN    #factorParen
+    | (MENOS)? NUMBER               #factorNumber
+    | ID                            #factorId
+    | STRING                        #factorString
     ;
 
 boolExpr
-    : boolExpr OR boolExprT
-    | boolExprT
+    : boolExpr OR boolExprT #boolExprOr
+    | boolExprT             #boolExprExprT
     ;
 
 boolExprT
-    : boolExprT AND boolExprF
-    | boolExprF
+    : boolExprT AND boolExprF #boolExprTAnd
+    | boolExprF               #boolExprTExprF
     ;
 
 boolExprF
-    : TRUE
-    | FALSE
-    | NOT boolExpr
-    | ABREPAREN boolExpr CIERRAPAREN
-    | expr compOp expr
+    : TRUE                              #boolExprFTrue
+    | FALSE                             #boolExprFFalse
+    | NOT boolExpr                      #boolExprFNot
+    | ABREPAREN boolExpr CIERRAPAREN    #boolExprFParen
+    | expr compOp expr                  #boolExprFComp
     ;
 
 compOp
-    : IGUALIGUAL | NOIGUAL | MENORIGUAL | MAYORIGUAL | MENOR | MAYOR
+    : IGUALIGUAL    #compOpIgualIgual
+    | NOIGUAL       #compOpNoIgual
+    | MENORIGUAL    #compOpMenorIgual
+    | MAYORIGUAL    #compOpMayorIgual
+    | MENOR         #compOpMenor
+    | MAYOR         #compOpMayor
     ;
